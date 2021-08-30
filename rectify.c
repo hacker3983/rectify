@@ -36,19 +36,19 @@ int main(int argc, char** argv) {
 			srow = input("Enter the amount of rows for the frame: ");
 			size_t rows = 0;int color = -1;
 			if(isnum(srow)) { rows = strtol(srow, NULL, 0); }
-			else fprintf(stderr, "%s is not a valid row. row must be a positive integer", srow);
+			else fprintf(stderr, "%s is not a valid row. row must be a positive integer.\n", srow);
 			free(srow);
+			if(rows != 0) {
+				list_colors(), color_opt = input("Choose one of the colors to use above (color must be a number): ");
+				if(raise_numerr(color_opt, NULL, 0)) { color = atoi(color_opt); }
+				free(color_opt);
 
-			list_colors(), color_opt = input("Choose one of the colors to use above (color must be a number): ");
-			if(raise_numerr(color_opt, NULL)) { color = atoi(color_opt); }
-			free(color_opt);
-
-			char* list[rows+1]; list[rows] = NULL;
-			for(size_t i=0;i<rows;i++) { list[i] = input("Enter the text for each row separated by a new line (enter): "); }
-
-			if(rows != 0) (frame != '\0') ? print_rect(list, frame, color, -1) : print_rect(list, '*', color, -1);
-			printf("\n");
-			for(size_t i=0;i<rows;i++) { free(list[i]); }
+				char* list[rows+1]; list[rows] = NULL;
+				for(size_t i=0;i<rows;i++) { list[i] = input("Enter the text for each row separated by a new line (enter): "); }
+				(frame != '\0') ? print_rect(list, frame, color, -1) : print_rect(list, '*', color, -1);
+				printf("\n");
+				for(size_t i=0;i<rows;i++) { free(list[i]); }
+			}
 		}
 	} else {
 		print_rect(welcome, '*', 1, -1);
