@@ -40,9 +40,9 @@ bool isnum(char* s) {
 	return true;
 }
 
-int raise_numerr(char* num, args_t* args) {
+int raise_numerr(char* num, args_t* args, int tig) {
 	if(num == NULL) return 0;
-	else if(num[0] == '-') {
+	else if(num[0] == '-' && tig) {
 		fprintf(stderr, "No color specified however selecting default color.\n");
 		return 0;
 	} else if(!isnum(num)) {
@@ -101,7 +101,7 @@ args_t parse_args(int argc, char** argv) {
 			}
 			case 'c': {
 				if(argv[optind] != NULL) {
-					char* number = argv[optind++]; raise_numerr(number, &args);
+					char* number = argv[optind++]; raise_numerr(number, &args, 1);
 					(number[0] == '-') ? optind-- : 0;
 				} else {
 					fprintf(stderr, "No color specified however selecting default color.\n");
