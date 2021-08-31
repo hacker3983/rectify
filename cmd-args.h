@@ -24,7 +24,7 @@ void usage(char* program_name) {
 }
 
 void list_colors() {
-	puts("Colors Numbers:");
+	puts("Color Numbers:");
 	for(int i=0;i<sizeof(colors)/sizeof(colors[0]);i++) {
 		printf("%d - %s\n", i, colors[i]);
 	}
