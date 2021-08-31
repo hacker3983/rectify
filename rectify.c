@@ -4,7 +4,7 @@
 #include "string.h"
 #include "cmd-args.h"
 #include "print-rect.h"
-#define RECTIFY_VERSION "0.1"
+#define RECTIFY_VERSION "rectify 0.1"
 
 char* input(const char* prompt) {
 	printf("%s", prompt);
@@ -58,7 +58,8 @@ int main(int argc, char** argv) {
 		if(!args.text) {
 			fprintf(stderr, "%s: option -t is required but not specified\n", argv[0]);
 		} else {
-			print_rect(args.string.list, args.frame, args.color, args.string.size);
+			if(args.filename != NULL) print_rectw(args.string.list, args.frame, args.color, args.string.size, args.filename);
+			else print_rect(args.string.list, args.frame, args.color, args.string.size);
 		}
 		string_free(&args.string);
 	}
