@@ -4,7 +4,7 @@
 #include "string.h"
 #include "cmd-args.h"
 #include "print-rect.h"
-#define RECTIFY_VERSION "rectify 0.1"
+#define RECTIFY_VERSION "\033[36mrectify 0.1\033[0m"
 
 char* input(const char* prompt) {
 	printf("%s", prompt);
@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
 		while(1) {
 			char* color_opt, frame = '\0', *srow;
 			print_rect(welcome, '*', 1, -1);
-			printf("Version: \033[36mrectify 0.1\033[0m\n");
+			printf("Version: %s\n", RECTIFY_VERSION);
 			printf("Enter the character for the frame: "); scanf("%c", &frame);
 			if(frame == '\n') { frame = '\0'; }
 			while(getchar() != '\n') { }
@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
 		}
 	} else {
 		print_rect(welcome, '*', 1, -1);
-		printf("Version: \033[36mrectify 0.1\033[0m\n");
+		printf("Version: %s\n", RECTIFY_VERSION);
 		args = parse_args(argc, argv);
 		(args.frame == '\0') ? args.frame = '*': 0;
 		if(!args.text) {
