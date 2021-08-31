@@ -2,7 +2,7 @@
 A simple program that outputs rectangular frames for ASCII text in a terminal
 # Installation
 ```sh
-git clone https://github.com/hacker3983/rectify
+git clone https://github.com/hacker3983/rectify && cd rectify
 ```
 # Usage
 ```
