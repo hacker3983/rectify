@@ -29,3 +29,4 @@ Print out text in a rectangular frame
 * Piping - Piping output into another program
 * Windows support - Support for windows
 * Text alignment - Allowing you to center or specify the position of where the text should be in a frame
+* Different Shapes - Allows for you to create frames with different shapes example triangle, circle, etc.
