@@ -20,7 +20,7 @@ void usage(char* program_name) {
 			"  -t, --text\ttext to put inside the frame\n"
 			"  -o, --outfile\twrites the output to a given filename\n"
 			"  -i, --interactive\tEnter Interactive mode\n"
-			"  -h, --help\tprint this help message and exit (also --help)\n", program_name);
+			"  -h, --help\tprint this help message and exit\n", program_name);
 }
 
 void list_colors() {
