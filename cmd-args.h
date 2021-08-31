@@ -3,7 +3,7 @@
 #include <getopt.h>
 char* colors[] = {"black", "red", "green", "yellow", "blue", "magenta", "cyan", "white"};
 typedef struct args {
-	char frame;
+	char* filename, frame;
 	int color, list_colors, interactive, text;
 	string_t string;
 } args_t;
@@ -18,6 +18,7 @@ void usage(char* program_name) {
 			"  -l, --list-colors\tprint the list of colors supported\n"
 			"  -c, --color\tcolor to use to color the frame\n"
 			"  -t, --text\ttext to put inside the frame\n"
+			"  -o, --outfile\twrites the output to a given filename\n"
 			"  -i, --interactive\tEnter Interactive mode\n"
 			"  -h, --help\tprint this help message and exit (also --help)\n", program_name);
 }
@@ -76,9 +77,10 @@ args_t parse_args(int argc, char** argv) {
 		{"text", required_argument, 0, 't'},
 		{"frame-character", optional_argument, 0, 'f'},
 		{"color", optional_argument, 0, 'c'},
+		{"outfile", optional_argument, 0, 'o'},
 		{0, 0, 0, 0}
 	};
-	while((option = getopt_long(argc, argv, "lt:f::c::", options, &loption_index)) != -1) {
+	while((option = getopt_long(argc, argv, "lt:f::c::o:", options, &loption_index)) != -1) {
 		switch(option) {
 			case 't': {
 				args.text = 1;
@@ -98,8 +100,7 @@ args_t parse_args(int argc, char** argv) {
 				break;
 			} case 'l': {
 				list_colors(); break;
-			}
-			case 'c': {
+			} case 'c': {
 				if(argv[optind] != NULL) {
 					char* number = argv[optind++]; raise_numerr(number, &args, 1);
 					(number[0] == '-') ? optind-- : 0;
@@ -107,13 +108,17 @@ args_t parse_args(int argc, char** argv) {
 					fprintf(stderr, "No color specified however selecting default color.\n");
 				}
 				break;
-			}
-			case 'f': {
+			} case 'f': {
 				if(argv[optind] != NULL) {
 					if(argv[optind][0] != '-') {
 						for(size_t i=0;i<strlen(argv[optind]);i++) { args.frame = argv[optind][i]; }
 					}
 				}  break;
+			} case 'o': {
+				if(optarg != NULL) {
+					args.filename = optarg;
+				}
+				break;
 			}
 			default: exit(0);
 		}
