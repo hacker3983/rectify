@@ -28,3 +28,4 @@ Print out text in a rectangular frame
 * Rainbow mode - Randomly generate a color for a frame or frames
 * Piping - Piping output into another program
 * Windows support - Support for windows
+* Text alignment - Alowing you to center or specify the position of where the text should be in a frame
