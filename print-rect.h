@@ -1,4 +1,6 @@
 #include <stdarg.h>
+#include <stdlib.h>
+#include <string.h>
 // swap two long ints
 void swap(size_t* a, size_t* b) {
 	size_t temp = *a;
@@ -33,15 +35,20 @@ void print_writef(FILE* f, const char* format, ...) {
 					free(temp);
 					break;
 				case 'd': {
-					num = va_arg(va, int);
-					while(num != 0) {
-						buff[x++] = (num % 10)+'0';
-						char* temp = buff;
-						buff = calloc(x+1, sizeof(char*));
-						strcpy(buff, temp);
-						free(temp);
-						num /= 10;
+					int j = 0, n = 0;
+					num = va_arg(va, int), n = num;
+					while(n != 0) {
+						j++; n /= 10;
 					}
+					char* strnum = calloc(j, sizeof(char*)), *temp;
+					sprintf(strnum, "%d", num);
+					x += j;
+					temp = buff;
+					buff = calloc(x, sizeof(char*));
+					strcpy(buff, temp);
+					strcat(buff, strnum);
+					free(temp);
+					free(strnum);
 					break;
 				} case 's':
 					str = va_arg(va, char*);
@@ -74,14 +81,15 @@ void print_rect(char* list[], char c, int color, size_t length) {
 	size_t size=0;
 	if(length == -1) { while(list[size] != NULL) { size++; } }
 	else { size = length; }
-	size_t arr[size];
+	size_t arr[size], max = 0;
 	for(size_t i=0;i<size;i++) { arr[i] = strlen(list[i]); }
+	max = arr[0];
 	for(size_t i=0;i<size;i++) {
-		for(size_t x=0;x<size;x++) {
-			if(arr[i] > arr[x]) swap(&arr[i], &arr[x]);
+		if(arr[i] > max) {
+			max = arr[i];
 		}
 	}
-	char* buff = multiply(c, arr[0]+4);
+	char* buff = multiply(c, max+4);
 	printf("%s\n", buff);
 	/*
 	   *********
@@ -102,7 +110,7 @@ void print_rect(char* list[], char c, int color, size_t length) {
 	for(size_t i=0;i<size;i++) {
 		printf("%c %s", c, list[i]);
 		size_t n = strlen(list[i]);
-		for(size_t x=0;x<(arr[0]+2)-(n+1);x++) { printf(" "); }
+		for(size_t x=0;x<(max+2)-(n+1);x++) { printf(" "); }
 		printf("%c\n", c);
 	}
 	printf("%s\033[0m\n", buff);
@@ -115,19 +123,21 @@ void print_rectw(char* list[], char c, int color, size_t length, char* filename)
 	size_t size=0;
 	if(length == -1) { while(list[size] != NULL) { size++; } }
 	else { size = length; }
-	size_t arr[size];
+	size_t arr[size], max = 0;
 	for(size_t i=0;i<size;i++) { arr[i] = strlen(list[i]); }
+	max = arr[0];
 	for(size_t i=0;i<size;i++) {
-		for(size_t x=0;x<size;x++) {
-			if(arr[i] > arr[x]) swap(&arr[i], &arr[x]);
+		if(arr[i] > max) {
+			max = arr[i];
 		}
 	}
-	char* buff = multiply(c, arr[0]+4);
+	printf("%ld\n", max);
+	char* buff = multiply(c, max+4);
 	print_writef(f, "%s\n", buff);
 	for(size_t i=0;i<size;i++) {
 		print_writef(f, "%c %s", c, list[i]);
 		size_t n = strlen(list[i]);
-		for(size_t x=0;x<(arr[0]+2)-(n+1);x++) { print_writef(f, " "); }
+		for(size_t x=0;x<(max+2)-(n+1);x++) { print_writef(f, " "); }
 		print_writef(f, "%c\n", c);
 	}
 	print_writef(f, "%s\033[0m\n", buff);
